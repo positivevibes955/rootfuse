@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Mono:wght@400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 2 22% 6%; /* #021612 */
+    --foreground: 174 100% 59%; /* #35f6ae */
+    --card: 2 22% 6%;
+    --card-foreground: 174 100% 59%;
+    --popover: 2 22% 6%;
+    --popover-foreground: 174 100% 59%;
+    --primary: 174 100% 59%;
+    --primary-foreground: 2 22% 6%;
+    --secondary: 162 100% 26%; /* #008347 */
+    --secondary-foreground: 174 100% 59%;
+    --muted: 162 100% 26%;
+    --muted-foreground: 174 100% 59%;
+    --accent: 162 100% 26%;
+    --accent-foreground: 174 100% 59%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 162 100% 26%; /* #008347 */
+    --input: 162 100% 26%;
+    --ring: 174 100% 59%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 2 22% 6%;
+    --foreground: 174 100% 59%;
+    --card: 2 22% 6%;
+    --card-foreground: 174 100% 59%;
+    --popover: 2 22% 6%;
+    --popover-foreground: 174 100% 59%;
+    --primary: 174 100% 59%;
+    --primary-foreground: 2 22% 6%;
+    --secondary: 162 100% 26%;
+    --secondary-foreground: 174 100% 59%;
+    --muted: 162 100% 26%;
+    --muted-foreground: 174 100% 59%;
+    --accent: 162 100% 26%;
+    --accent-foreground: 174 100% 59%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 162 100% 26%;
+    --input: 162 100% 26%;
+    --ring: 174 100% 59%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "PT Mono", "Orbitron", monospace;
+  }
+}
+
+/* Hexagon styles for quick links */
+.hexagon {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  margin: 8px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.hexagon-inner {
+  width: 100%;
+  height: 100%;
+  background: #008347;
+  border: 2px solid #35f6ae;
+  position: relative;
+  transform: rotate(30deg);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.hexagon-inner:hover {
+  background: #35f6ae;
+  border-color: #008347;
+  transform: rotate(30deg) scale(1.1);
+}
+
+.hexagon-content {
+  transform: rotate(-30deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #021612;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "PT Mono", monospace;
+}
+
+.hexagon-inner:hover .hexagon-content {
+  color: #021612;
+}
+
+/* Smaller hexagon styles for 27 quick links */
+.hexagon-small {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  margin: 4px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.hexagon-inner-small {
+  width: 100%;
+  height: 100%;
+  background: #008347;
+  border: 2px solid #35f6ae;
+  position: relative;
+  transform: rotate(30deg);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.hexagon-inner-small:hover {
+  background: #35f6ae;
+  border-color: #008347;
+  transform: rotate(30deg) scale(1.1);
+}
+
+.hexagon-content-small {
+  transform: rotate(-30deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #021612;
+  font-size: 8px;
+  font-weight: bold;
+  text-align: center;
+  font-family: "PT Mono", monospace;
+}
+
+.hexagon-inner-small:hover .hexagon-content-small {
+  color: #021612;
+}
+
+/* Responsive utilities */
+.above-fold {
+  min-height: calc(100vh - 80px);
+}
+
+@media (max-width: 768px) {
+  .hexagon {
+    width: 60px;
+    height: 60px;
+    margin: 6px;
+  }
+
+  .hexagon-content {
+    font-size: 8px;
+  }
+}
+
+/* Ensure proper spacing and layout */
+.dashboard-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,9 @@
+[functions]
+[functions.payments-webhook]
+verify_jwt = false
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+allowed_mime_types = ["image/jpeg", "image/png", "image/gif", "image/webp"]
+image_transformation = { enabled = true }
