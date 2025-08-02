@@ -26,13 +26,14 @@ export default function CartPage() {
   const [user, setUser] = useState(null);
   const supabase = createClient();
 
-  useEffect(() => {
+ useEffect(() => {
     const getUser = async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
-      setUser(user);
+      
       if (user) {
+        setUser(user);
         fetchCartItems(user.id);
       } else {
         setLoading(false);
@@ -40,7 +41,7 @@ export default function CartPage() {
     };
     getUser();
   }, []);
-
+    
   const fetchCartItems = async (userId: string) => {
     try {
       const { data, error } = await supabase
