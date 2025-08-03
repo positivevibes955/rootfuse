@@ -19,11 +19,14 @@ interface CartItemType {
   upsells: Array<{ name: string; price: number }>;
   total_price: number;
 }
+interface User {
+  id: string;
+  name: string
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
  useEffect(() => {
