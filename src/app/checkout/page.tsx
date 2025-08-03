@@ -9,7 +9,7 @@ import CartItem from "@/components/cart-item";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { createClient } from "../../../supabase/client";
 import Link from "next/link";
-import type { User } from "@supabase/supabase-js";
+import { type User } from "@supabase/supabase-js";
 
 interface CartItemType {
   id: string;
@@ -23,9 +23,9 @@ interface CartItemType {
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-const [loading, setLoading] = useState<boolean>(true);
-const [user, setUser] = useState<User | null>(null);
-const supabase = createClient();
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
