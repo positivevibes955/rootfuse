@@ -23,9 +23,9 @@ interface CartItemType {
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
-  const supabase = createClient();
+const [loading, setLoading] = useState<boolean>(true);
+const [user, setUser] = useState<User | null>(null);
+const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
@@ -56,7 +56,7 @@ export default function CartPage() {
       }
     };
 
-    
+
     getUser();
   }, []);
 
