@@ -37,7 +37,7 @@ const supabase = createClient();
 
         if (error) {
           console.error("Error getting user:", error);
-          setUser(null);
+          setUser(user as User | null);
           setLoading(false);
           return;
         }
