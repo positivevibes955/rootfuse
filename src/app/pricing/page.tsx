@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Leaf, Zap, Shield, Users } from "lucide-react";
 import { useState, useEffect } from "react";
+import type { User } from "@supabase/supabase-js";
 
 const pricingTiers = [
   {
@@ -116,7 +117,7 @@ const upsells = [
 ];
 
 export default function Pricing() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
   useEffect(() => {
