@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,7 +10,7 @@ import { Check, Mail, ArrowLeft, Phone } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function WaitlistSuccessPage() {
+function WaitlistSuccessContent() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
   const [phone, setPhone] = useState("");
@@ -163,5 +163,23 @@ export default function WaitlistSuccessPage() {
         </CardContent>
       </Card>
     </main>
+  );
+}
+
+export default function WaitlistSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="flex min-h-screen flex-col items-center justify-center bg-dashboard-bg p-4">
+          <Card className="w-full max-w-md bg-dashboard-bg border-dashboard-border">
+            <CardContent className="flex items-center justify-center p-8">
+              <div className="text-dashboard-text font-mono">Loading...</div>
+            </CardContent>
+          </Card>
+        </main>
+      }
+    >
+      <WaitlistSuccessContent />
+    </Suspense>
   );
 }
