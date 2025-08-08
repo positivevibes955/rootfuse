@@ -9,6 +9,7 @@ import CartItem from "@/components/cart-item";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { createClient } from "../../../supabase/client";
 import Link from "next/link";
+import type { User } from "@supabase/supabase-js";
 
 interface CartItemType {
   id: string;
@@ -19,9 +20,6 @@ interface CartItemType {
   upsells: Array<{ name: string; price: number }>;
   total_price: number;
 }
-interface User {
-  id: string;
-  name: string
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
@@ -29,22 +27,38 @@ export default function CartPage() {
   const [user, setUser] = useState<User | null>(null);
   const supabase = createClient();
 
- useEffect(() => {
+  useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      
-      if (user) {
+      try {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+
+        if (error) {
+          console.error("Error getting user:", error);
+          setUser(null);
+          setLoading(false);
+          return;
+        }
+
         setUser(user);
-        fetchCartItems(user.id);
-      } else {
+
+        if (user) {
+          await fetchCartItems(user.id);
+        } else {
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error in getUser:", error);
+        setUser(null);
         setLoading(false);
       }
     };
+
     getUser();
   }, []);
-    
+
   const fetchCartItems = async (userId: string) => {
     try {
       const { data, error } = await supabase
@@ -286,3 +300,4 @@ export default function CartPage() {
     </div>
   );
 }
+
