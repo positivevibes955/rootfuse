@@ -5,9 +5,12 @@ import Navbar from "@/components/navbar";
 import PricingCard from "@/components/pricing-card";
 import Footer from "@/components/footer";
 import CTAButton from "@/components/cta-button";
+import Link from "next/link";
+import GetStartedForm from "@/components/waitlist-form";
 
 import { createClient } from "../../supabase/client";
 import { getImageUrl } from "@/utils/storage";
+import type { User } from "@supabase/supabase-js";
 import {
   ArrowUpRight,
   CheckCircle2,
@@ -57,7 +60,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-dashboard-bg">
+    <div className="min-h-screen bg-dashboard-bg" suppressHydrationWarning>
       <Navbar />
       <Hero />
 
@@ -124,7 +127,7 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                 <div className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4">
                   <div className="text-dashboard-text font-digital mb-2">
-                    📊 Live Dashboard
+                    Live Dashboard
                   </div>
                   <div className="text-dashboard-text/70 font-mono">
                     Real-time KPIs and metrics
@@ -132,7 +135,7 @@ export default function Home() {
                 </div>
                 <div className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4">
                   <div className="text-dashboard-text font-digital mb-2">
-                    🔄 METRC Integration
+                    METRC Integration
                   </div>
                   <div className="text-dashboard-text/70 font-mono">
                     Seamless compliance sync
@@ -140,12 +143,130 @@ export default function Home() {
                 </div>
                 <div className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4">
                   <div className="text-dashboard-text font-digital mb-2">
-                    🤖 AI Assistant
+                    AI Assistant
                   </div>
                   <div className="text-dashboard-text/70 font-mono">
                     Smart automation tools
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Demo Video Section */}
+      <section className="py-24 bg-dashboard-bg">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold font-digital text-dashboard-text mb-4">
+              Watch RootFuse Transform Your Operations
+            </h2>
+            <p className="text-dashboard-text/80 font-mono max-w-2xl mx-auto">
+              See how cannabis businesses are streamlining their operations with
+              our unified platform
+            </p>
+          </div>
+
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-dashboard-bg border-2 border-dashboard-border rounded-xl p-8">
+              <div className="aspect-video bg-dashboard-bg rounded-lg border border-dashboard-border overflow-hidden relative">
+                <video
+                  id="demo-video"
+                  className="w-full h-full object-cover"
+                  poster="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80"
+                  controlsList="nodownload nofullscreen noremoteplayback"
+                  disablePictureInPicture
+                  onContextMenu={(e) => e.preventDefault()}
+                >
+                  <source
+                    src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+
+                {/* Custom Controls */}
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between bg-dashboard-bg/80 backdrop-blur-sm rounded-lg p-3">
+                  <div className="flex items-center space-x-4">
+                    <button
+                      id="play-pause-btn"
+                      className="text-dashboard-text hover:text-dashboard-border transition-colors"
+                      onClick={() => {
+                        const video = document.getElementById(
+                          "demo-video",
+                        ) as HTMLVideoElement;
+                        const btn = document.getElementById("play-pause-btn");
+                        if (video.paused) {
+                          video.play();
+                          if (btn)
+                            btn.innerHTML =
+                              '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/></svg>';
+                        } else {
+                          video.pause();
+                          if (btn)
+                            btn.innerHTML =
+                              '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                        }
+                      }}
+                    >
+                      <svg
+                        className="w-6 h-6"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+
+                    <button
+                      id="volume-btn"
+                      className="text-dashboard-text hover:text-dashboard-border transition-colors"
+                      onClick={() => {
+                        const video = document.getElementById(
+                          "demo-video",
+                        ) as HTMLVideoElement;
+                        const btn = document.getElementById("volume-btn");
+                        if (video.muted) {
+                          video.muted = false;
+                          if (btn)
+                            btn.innerHTML =
+                              '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6 10H4a2 2 0 00-2 2v0a2 2 0 002 2h2l4 4V6l-4 4z"></path></svg>';
+                        } else {
+                          video.muted = true;
+                          if (btn)
+                            btn.innerHTML =
+                              '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a2 2 0 01-2-2v0a2 2 0 012-2h1.586l4.707-4.707C10.923 5.663 12 6.109 12 7v10c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>';
+                        }
+                      }}
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6 10H4a2 2 0 00-2 2v0a2 2 0 002 2h2l4 4V6l-4 4z"
+                        ></path>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="text-dashboard-text/70 font-mono text-sm">
+                    Cannabis Operations Demo
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-dashboard-text/70 font-mono text-sm">
+                  Watch how RootFuse eliminates the need for multiple tools and
+                  streamlines your entire cannabis operation
+                </p>
               </div>
             </div>
           </div>
@@ -254,7 +375,7 @@ export default function Home() {
                   <th className="text-center p-4 text-dashboard-text font-digital bg-dashboard-text/10">
                     Rootfuse
                     <br />
-                    $269/mo
+                    $579/mo
                   </th>
                   <th className="text-center p-4 text-dashboard-text font-digital">
                     Canix
@@ -555,10 +676,10 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold font-digital text-dashboard-text mb-4">
-              Early Access Pricing - 50% Off Lifetime
+              Command Center Pricing - No Hidden Fees
             </h2>
             <p className="text-dashboard-text/80 font-mono max-w-2xl mx-auto">
-              Lock in founder rates before public launch. Limited time offer.
+              Transparent pricing for cannabis operations management.
             </p>
           </div>
 
@@ -567,8 +688,8 @@ export default function Home() {
             {[
               {
                 name: "Core Command",
-                price: 134.5,
-                originalPrice: 269,
+                price: 269,
+                originalPrice: null,
                 description: "Perfect for single-license operations",
                 features: [
                   "1 License Type (Cultivation, Processing, or Dispensary)",
@@ -596,12 +717,12 @@ export default function Home() {
               },
               {
                 name: "Growth Command",
-                price: 289.5,
-                originalPrice: 579,
+                price: 579,
+                originalPrice: null,
                 description: "Advanced features for growing operations",
                 features: [
                   "Everything in Core Command plus...",
-                  "1 License Type + $300/month per additional type",
+                  "1 License Type + $200/month per additional type",
                   "Up to 10 Users ($15/user after 5)",
                   "Advanced METRC Integration",
                   "Grow Forecasting & Yield Analytics",
@@ -626,12 +747,12 @@ export default function Home() {
               },
               {
                 name: "Pro Command",
-                price: 499.5,
-                originalPrice: 999,
+                price: 999,
+                originalPrice: null,
                 description: "Enterprise-grade solution",
                 features: [
                   "Everything in Growth Command plus...",
-                  "Unlimited License Types ($300/month per additional type)",
+                  "Unlimited License Types ($200/month per additional type)",
                   "Unlimited Users ($15/user after 15)",
                   "Full METRC Integration",
                   "POS Orders & Wholesale Portal",
@@ -786,10 +907,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Upsells */}
+          {/* Upgrades */}
           <div className="max-w-6xl mx-auto">
             <h3 className="text-2xl font-bold font-digital text-dashboard-text mb-8 text-center">
-              Available Upsells (Any Tier)
+              Upgrades - Any Tier
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
@@ -797,110 +918,143 @@ export default function Home() {
                   name: "Marketplace Access",
                   price: "$159/month + 2% sales",
                   desc: "Post products, find suppliers, sell or source directly within Rootfuse",
+                  link: "/marketplace-info",
                 },
-                {
-                  name: "Environment Sync",
-                  price: "$49–$199/month",
-                  desc: "Real-time controller data (Growlink, Aranet, TrolMaster, etc) synced with compliance, tasks, and alerts",
-                },
-                {
-                  name: "TrolMaster Sync Module Kit",
-                  price: "$99/month + $129 per zone setup",
-                  desc: "Exclusively available with Rootfuse",
-                },
-                {
-                  name: "Custom AI Assistant",
-                  price: "$39/month + $149–$499 setup",
-                  desc: "Train AI on your SOPs, team, forms, compliance docs, and more. Personalized insights and recall",
-                },
-                {
-                  name: "Image/Video Generation",
-                  price:
-                    "Free images + 1 free video, then $39/month + $39 per video",
-                  desc: "AI-powered content creation for marketing and documentation",
-                },
-                {
-                  name: "Text Marketing",
-                  price: "$39/month + usage",
-                  desc: "SMS campaigns and automated customer communications",
-                },
-                {
-                  name: "Auto Accountant Report",
-                  price: "$79/year",
-                  desc: "Take this to your accountant and you're done",
-                },
-                {
-                  name: "Product Photography",
-                  price: "$30/month",
-                  desc: "Up to 150 images",
-                },
-                {
-                  name: "Video Generation",
-                  price: "$100/month",
-                  desc: "15 videos or $10 each",
-                },
-                {
-                  name: "Custom Branding",
-                  price: "$300",
-                  desc: "One-time setup fee",
-                },
-                {
-                  name: "Done-With-You Setup",
-                  price: "$350",
-                  desc: "1-on-1 video session",
-                },
-                {
-                  name: "Done-For-You Setup",
-                  price: "$600+",
-                  desc: "In-person setup (varies by distance)",
-                },
-                {
-                  name: "Website Creation",
-                  price: "$500",
-                  desc: "Up to 7 pages + hosting",
-                },
-                {
-                  name: "eCommerce Website",
-                  price: "$1,500",
-                  desc: "Up to 15 products + hosting",
-                },
+
                 {
                   name: "Additional License Types",
-                  price: "$300/month each",
+                  price: "$200/month each",
                   desc: "Add Cultivation, Processing, or Dispensary licenses to any plan",
-                },
-                {
-                  name: "Website / Landing Page Builder",
-                  price: "$79/month",
-                  desc: "Build and customize your cannabis business website",
-                },
-                {
-                  name: "White Label Options",
-                  price: "$500/month",
-                  desc: "Customize the platform with your branding and colors",
+                  link: "/additional-license-types-info",
                 },
                 {
                   name: "Extra Users",
                   price: "$15/user/month",
                   desc: "Add team members beyond your plan's included users",
+                  link: "/extra-users-info",
+                },
+                {
+                  name: "White Label Options",
+                  price: "$500/month",
+                  desc: "Customize the platform with your branding and colors",
+                  link: "/white-label-info",
+                },
+                {
+                  name: "Social Media Scheduler",
+                  price: "$49/month",
+                  desc: "Schedule and manage your cannabis business social media presence",
+                  link: "/social-media-scheduler-info",
+                },
+                {
+                  name: "AI Automation Services",
+                  price: "$199/month + setup",
+                  desc: "Custom AI automation solutions for your cannabis operations",
+                  link: "/ai-automation-services-info",
+                },
+                {
+                  name: "API Integration (Not Listed)",
+                  price: "$299 setup + $99/month",
+                  desc: "Custom API integrations for tools not in our standard library",
+                  link: "/api-not-listed-info",
+                },
+                {
+                  name: "Custom Database Setup",
+                  price: "$799 setup + $149/month",
+                  desc: "Custom database architecture and data migration services",
+                  link: "/custom-database-setup-info",
+                },
+                {
+                  name: "Custom AI Assistant",
+                  price: "$39/month + $149–$499 setup",
+                  desc: "Train AI on your SOPs, team, forms, compliance docs, and more. Personalized insights and recall",
+                  link: "/custom-ai-info",
+                },
+                {
+                  name: "Environment Sync",
+                  price: "$49–$199/month",
+                  desc: "Real-time controller data (Growlink, Aranet, TrolMaster, etc) synced with compliance, tasks, and alerts",
+                  link: "/environment-sync-info",
+                },
+                {
+                  name: "TrolMaster Sync Module Kit",
+                  price: "$159/zone + $199 setup consult",
+                  desc: "Custom Module Kit - Only available with Rootfuse",
+                  link: "/environment-sync-info",
+                },
+                {
+                  name: "Image/Video Generation",
+                  price:
+                    "Free images + 1 free video, then $39/month + $39 per video",
+                  desc: "AI-powered content creation for marketing and documentation. Professional video generation service with 24-hour turnaround.",
+                  link: "/video-generation-info",
+                },
+                {
+                  name: "Text Marketing",
+                  price: "$39/month + usage",
+                  desc: "SMS campaigns and automated customer communications",
+                  link: "/text-marketing-info",
+                },
+                {
+                  name: "Auto Accountant Report",
+                  price: "$79/year",
+                  desc: "Take this to your accountant and you're done",
+                  link: "/auto-accountant-info",
+                },
+                {
+                  name: "Product Photography",
+                  price: "$30/month",
+                  desc: "Up to 150 images",
+                  link: "/product-photography-info",
+                },
+
+                {
+                  name: "Custom Branding",
+                  price: "$300",
+                  desc: "One-time setup fee",
+                  link: "/custom-branding-info",
+                },
+                {
+                  name: "Done-With-You Setup",
+                  price: "$350",
+                  desc: "1-on-1 video session",
+                  link: "/done-with-you-info",
+                },
+                {
+                  name: "Done-For-You Setup",
+                  price: "$600+",
+                  desc: "In-person setup (varies by distance)",
+                  link: "/done-for-you-info",
+                },
+                {
+                  name: "Website Creation",
+                  price: "$500 - $1,500",
+                  desc: "Professional websites from 7 pages ($500) to full eCommerce with 15 products ($1,500) + hosting included",
+                  link: "/website-creation-info",
+                },
+                {
+                  name: "Custom Analytics",
+                  price: "$199 DFY setup",
+                  desc: "Custom analytics dashboard and reporting solutions tailored to your business needs",
+                  link: "/custom-analytics-info",
                 },
               ].map((upsell, index) => (
-                <div
+                <Link
                   key={index}
-                  className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4 hover:border-dashboard-text/50 transition-all"
+                  href={upsell.link}
+                  className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4 hover:border-dashboard-text/50 transition-all cursor-pointer block h-full"
                 >
-                  <div className="flex flex-col h-full">
+                  <div className="flex flex-col h-full min-h-[140px]">
                     <h4 className="font-semibold font-digital text-dashboard-text mb-2">
                       {upsell.name}
                     </h4>
                     <p className="text-dashboard-text/70 font-mono text-sm mb-3 flex-grow">
                       {upsell.desc}
                     </p>
-                    <div className="text-dashboard-text font-digital font-bold text-sm">
+                    <div className="text-dashboard-text font-digital font-bold text-sm mt-auto">
                       {upsell.price}
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -920,128 +1074,124 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
-                <div className="text-4xl mb-4">💰</div>
-                <h3 className="text-xl font-bold font-digital text-dashboard-text mb-3">
-                  Earn Commission
-                </h3>
-                <p className="text-dashboard-text/70 font-mono mb-4">
-                  Receive 20% commission on the first year subscription for
-                  every successful referral that signs up for any paid plan.
-                </p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Core Command: $269 → You earn $53.80
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Growth Command: $579 → You earn $115.80
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Pro Command: $999 → You earn $199.80
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
-                <div className="text-4xl mb-4">🎁</div>
-                <h3 className="text-xl font-bold font-digital text-dashboard-text mb-3">
-                  Referral Rewards
-                </h3>
-                <p className="text-dashboard-text/70 font-mono mb-4">
-                  Both you and your referral get exclusive benefits when they
-                  join RootFuse.
-                </p>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Your referral gets 1 month free
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Priority onboarding support
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Exclusive referrer dashboard access
-                    </span>
-                  </li>
-                  <li className="flex items-start space-x-2">
-                    <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                    <span className="text-dashboard-text/80 font-mono">
-                      Monthly payout via PayPal or direct deposit
-                    </span>
-                  </li>
-                </ul>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <h3 className="text-xl font-bold font-digital text-dashboard-text mb-3">
+                Earn Commission
+              </h3>
+              <p className="text-dashboard-text/70 font-mono mb-4">
+                Receive 15% commission on the first year subscription for every
+                successful referral that signs up for any paid plan.
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Core Command: $269 → You earn $40.35
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Growth Command: $579 → You earn $86.85
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Pro Command: $999 → You earn $149.85
+                  </span>
+                </li>
+              </ul>
             </div>
 
-            <div className="bg-dashboard-border/10 rounded-xl p-8 text-center">
-              <h3 className="text-2xl font-bold font-digital text-dashboard-text mb-4">
-                How It Works
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <h3 className="text-xl font-bold font-digital text-dashboard-text mb-3">
+                Referral Rewards
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
-                  <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
-                    1
-                  </div>
-                  <h4 className="font-semibold font-digital text-dashboard-text mb-2">
-                    Share Your Link
-                  </h4>
-                  <p className="text-dashboard-text/70 font-mono text-sm">
-                    Get your unique referral link and share it with cannabis
-                    businesses
-                  </p>
+              <p className="text-dashboard-text/70 font-mono mb-4">
+                Both you and your referral get exclusive benefits when they join
+                RootFuse.
+              </p>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Your referral gets 1 month free
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Priority onboarding support
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Exclusive referrer dashboard access
+                  </span>
+                </li>
+                <li className="flex items-start space-x-2">
+                  <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
+                  <span className="text-dashboard-text/80 font-mono">
+                    Monthly payout via PayPal or direct deposit
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="bg-dashboard-border/10 rounded-xl p-8 text-center">
+            <h3 className="text-2xl font-bold font-digital text-dashboard-text mb-4">
+              How It Works
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
+                  1
                 </div>
-                <div className="text-center">
-                  <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
-                    2
-                  </div>
-                  <h4 className="font-semibold font-digital text-dashboard-text mb-2">
-                    They Sign Up
-                  </h4>
-                  <p className="text-dashboard-text/70 font-mono text-sm">
-                    Your referral creates an account and subscribes to any paid
-                    plan
-                  </p>
-                </div>
-                <div className="text-center">
-                  <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
-                    3
-                  </div>
-                  <h4 className="font-semibold font-digital text-dashboard-text mb-2">
-                    You Get Paid
-                  </h4>
-                  <p className="text-dashboard-text/70 font-mono text-sm">
-                    Receive 20% commission monthly for their first year
-                    subscription
-                  </p>
-                </div>
+                <h4 className="font-semibold font-digital text-dashboard-text mb-2">
+                  Share Your Link
+                </h4>
+                <p className="text-dashboard-text/70 font-mono text-sm">
+                  Get your unique referral link and share it with cannabis
+                  businesses
+                </p>
               </div>
-              <div className="mt-8">
-                <a
-                  href="mailto:referrals@rootfuse.com?subject=Referral Program Interest"
-                  className="inline-flex items-center px-6 py-3 text-dashboard-bg bg-dashboard-text rounded-lg hover:bg-dashboard-border transition-colors font-digital"
-                >
-                  Join Referral Program
-                  <ArrowUpRight className="ml-2 w-4 h-4" />
-                </a>
+              <div className="text-center">
+                <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
+                  2
+                </div>
+                <h4 className="font-semibold font-digital text-dashboard-text mb-2">
+                  They Sign Up
+                </h4>
+                <p className="text-dashboard-text/70 font-mono text-sm">
+                  Your referral creates an account and subscribes to any paid
+                  plan
+                </p>
               </div>
+              <div className="text-center">
+                <div className="bg-dashboard-text text-dashboard-bg rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-3 font-digital font-bold">
+                  3
+                </div>
+                <h4 className="font-semibold font-digital text-dashboard-text mb-2">
+                  You Get Paid
+                </h4>
+                <p className="text-dashboard-text/70 font-mono text-sm">
+                  Receive 15% commission monthly for their first year
+                  subscription
+                </p>
+              </div>
+            </div>
+            <div className="mt-8">
+              <a
+                href="mailto:referrals@rootfuse.com?subject=Referral Program Interest"
+                className="inline-flex items-center px-6 py-3 text-dashboard-bg bg-dashboard-text rounded-lg hover:bg-dashboard-border transition-colors font-digital"
+              >
+                Join Referral Program
+                <ArrowUpRight className="ml-2 w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
@@ -1054,8 +1204,9 @@ export default function Home() {
             Ready to Command Your Operations?
           </h2>
           <p className="text-dashboard-text/80 font-mono mb-8 max-w-2xl mx-auto">
-            Join the waitlist and be among the first to experience the future of
-            cannabis operations management.
+            Refer other cannabis businesses and earn 15% commission on their
+            first year subscription for every successful referral that stays
+            active.
           </p>
           <CTAButton />
         </div>
