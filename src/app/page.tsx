@@ -23,7 +23,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [demoImageUrl, setDemoImageUrl] = useState("");
   const supabase = createClient();
 
