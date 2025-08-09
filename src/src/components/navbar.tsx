@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import Link from "next/link";
 import { createClient } from "../../supabase/client";
 import { Button } from "./ui/button";

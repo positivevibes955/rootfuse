@@ -35,7 +35,15 @@ export default function Footer() {
                   href="/pricing"
                   className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
                 >
-                  Command Tiers
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/marketplace"
+                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
+                >
+                  Marketplace
                 </Link>
               </li>
               <li>
@@ -44,14 +52,6 @@ export default function Footer() {
                   className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
                 >
                   Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/api"
-                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
-                >
-                  API
                 </Link>
               </li>
             </ul>

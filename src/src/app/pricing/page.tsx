@@ -1,12 +1,14 @@
 "use client";
 
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 import { createClient } from "../../../supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Leaf, Zap, Shield, Users } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 
 const pricingTiers = [
@@ -95,7 +97,7 @@ const upsells = [
   {
     name: "METRC Sync",
     price: 79.5,
-    unit: "per license",
+    unit: "per license per month",
     link: "/metrc-sync-info",
   },
   {
@@ -320,6 +322,7 @@ export default function Pricing() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
