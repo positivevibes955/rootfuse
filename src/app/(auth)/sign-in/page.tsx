@@ -16,7 +16,7 @@ interface LoginProps {
 }
 
 export default function SignInPage({ searchParams }: LoginProps) {
-  const [message, setMessage] = useState<Message>({});
+  const [message, setMessage] = useState<Message>({ message: "" });
   const [showVerification, setShowVerification] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const [formData, setFormData] = useState<FormData | null>(null);
@@ -31,7 +31,7 @@ export default function SignInPage({ searchParams }: LoginProps) {
         setMessage(params);
       } catch (error) {
         console.error("Error loading search params:", error);
-        setMessage({});
+        setMessage({ message: "" });
       }
     };
     loadSearchParams();
