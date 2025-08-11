@@ -54,7 +54,7 @@ export default function HumanVerification({
 
     // Add 3-4 cannabis leaf tiles
     const cannabisCount = Math.floor(Math.random() * 2) + 3; // 3 or 4
-    const cannabisPositions = [];
+    const cannabisPositions: number[] = [];
 
     // Generate random positions for cannabis tiles
     while (cannabisPositions.length < cannabisCount) {
