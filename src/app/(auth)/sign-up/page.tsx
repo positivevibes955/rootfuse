@@ -29,7 +29,7 @@ export default function Signup(props: { searchParams: Promise<Message> }) {
         setSearchParams(params);
       } catch (error) {
         console.error("Error loading search params:", error);
-        setSearchParams({});
+        setSearchParams({ message: "" });
       }
     };
     loadSearchParams();
