@@ -2,6 +2,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
+import {
+  ArrowLeft,
+  RotateCw,
+  Shield,
+  AlertTriangle,
+  CheckCircle,
+} from "lucide-react";
 import Link from "next/link";
 
 export default function MetrcSyncInfo() {
