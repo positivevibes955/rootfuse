@@ -7,8 +7,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export async function POST(request: NextRequest) {
+  let body: any;
   try {
-    const body = await request.json();
+    body = await request.json();
     const { cartItems, totalAmount, customerInfo, userId } = body;
 
     if (!cartItems || !totalAmount || !userId) {
