@@ -14,7 +14,7 @@ import HumanVerification from "@/components/human-verification";
 
 export default function Signup(props: { searchParams: Promise<Message> }) {
   const [showPassword, setShowPassword] = useState(false);
-  const [searchParams, setSearchParams] = useState<Message>({});
+  const [searchParams, setSearchParams] = useState<Message>({ message: "" });
   const [isClient, setIsClient] = useState(false);
   const [showVerification, setShowVerification] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
