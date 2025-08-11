@@ -3,17 +3,29 @@
 import Link from "next/link";
 import { createClient } from "../../supabase/client";
 import { Button } from "./ui/button";
-import { User, UserCircle, Command, Sun, Moon } from "lucide-react";
+import {
+  User,
+  UserCircle,
+  Command,
+  Sun,
+  Moon,
+  Play,
+  Pause,
+  Volume2,
+} from "lucide-react";
 import UserProfile from "./user-profile";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getImageUrl } from "@/utils/storage";
 
 export default function Navbar() {
   const [user, setUser] = useState<any>(null);
   const [logoUrl, setLogoUrl] = useState<string>("");
+  const [audioUrl, setAudioUrl] = useState<string>("");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [isClient, setIsClient] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -143,20 +155,73 @@ export default function Navbar() {
   useEffect(() => {
     const fetchLogo = async () => {
       try {
-        // Try to get the logo from Supabase storage
-        // Check for the specific logo file name mentioned by user
+        // Try to get the high quality logo from Supabase storage
         const url = await getImageUrl("rootfuse.logo.name.horizontal.png");
         if (url && !url.includes("sign")) {
           setLogoUrl(url);
         } else {
-          console.log("Logo not found in storage, using fallback");
+          console.log("High quality logo not found in storage, using fallback");
         }
       } catch (error) {
-        console.log("Error fetching logo from storage:", error);
+        console.log("Error fetching high quality logo from storage:", error);
       }
     };
     fetchLogo();
   }, []);
+
+  useEffect(() => {
+    const fetchAudio = async () => {
+      try {
+        // Fetch the audio file from Supabase media bucket
+        const url = await getImageUrl("rootfuse.background.music.wav");
+        if (url && !url.includes("sign")) {
+          setAudioUrl(url);
+          console.log("Audio file loaded from Supabase storage:", url);
+        } else {
+          console.log("Audio file not found in storage, using fallback");
+          setAudioUrl("https://www.topmediai.com/app/ai-music/shared/6846474");
+        }
+      } catch (error) {
+        console.log("Error fetching audio file from storage:", error);
+        // Fallback to external URL if Supabase fails
+        setAudioUrl("https://www.topmediai.com/app/ai-music/shared/6846474");
+      }
+    };
+    fetchAudio();
+  }, []);
+
+  const toggleMusic = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.play();
+        setIsPlaying(true);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (audioRef.current && audioUrl) {
+      audioRef.current.loop = true;
+      audioRef.current.volume = 0.75; // Set volume to 75%
+
+      // Auto-play music when component mounts and audio URL is available
+      const playAudio = async () => {
+        try {
+          await audioRef.current?.play();
+          setIsPlaying(true);
+        } catch (error) {
+          console.log("Auto-play was prevented by browser:", error);
+          // Auto-play failed, user will need to manually start
+        }
+      };
+
+      // Small delay to ensure audio is loaded
+      setTimeout(playAudio, 1000);
+    }
+  }, [audioUrl]);
 
   return (
     <nav
@@ -172,12 +237,13 @@ export default function Navbar() {
             <Image
               src={logoUrl}
               alt="Rootfuse Logo"
-              width={120}
-              height={40}
-              className="h-8 w-auto"
+              width={160}
+              height={50}
+              className="h-10 w-auto object-contain"
               priority
+              quality={100}
               onError={() => {
-                console.log("Failed to load logo image");
+                console.log("Failed to load high quality logo image");
                 setLogoUrl("");
               }}
             />
@@ -204,46 +270,54 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <button
-                onClick={() =>
+              <Link
+                href="#demo"
+                onClick={(e) => {
+                  e.preventDefault();
                   document
                     .getElementById("demo")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className={`px-4 py-2 text-sm font-medium font-mono ${isDarkMode ? "text-dashboard-text hover:text-dashboard-text/80" : "text-gray-700 hover:text-gray-900"}`}
               >
                 Demo
-              </button>
-              <button
-                onClick={() =>
+              </Link>
+              <Link
+                href="#features"
+                onClick={(e) => {
+                  e.preventDefault();
                   document
                     .getElementById("features")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className={`px-4 py-2 text-sm font-medium font-mono ${isDarkMode ? "text-dashboard-text hover:text-dashboard-text/80" : "text-gray-700 hover:text-gray-900"}`}
               >
                 Features
-              </button>
-              <button
-                onClick={() =>
+              </Link>
+              <Link
+                href="#pricing"
+                onClick={(e) => {
+                  e.preventDefault();
                   document
                     .getElementById("pricing")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className={`px-4 py-2 text-sm font-medium font-mono ${isDarkMode ? "text-dashboard-text hover:text-dashboard-text/80" : "text-gray-700 hover:text-gray-900"}`}
               >
                 Pricing
-              </button>
-              <button
-                onClick={() =>
+              </Link>
+              <Link
+                href="#referral"
+                onClick={(e) => {
+                  e.preventDefault();
                   document
                     .getElementById("referral")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className={`px-4 py-2 text-sm font-medium font-mono ${isDarkMode ? "text-dashboard-text hover:text-dashboard-text/80" : "text-gray-700 hover:text-gray-900"}`}
               >
                 Referral
-              </button>
+              </Link>
               <Link
                 href="/sign-in"
                 className={`px-4 py-2 text-sm font-medium font-mono ${isDarkMode ? "text-dashboard-text hover:text-dashboard-text/80" : "text-gray-700 hover:text-gray-900"}`}
@@ -259,6 +333,17 @@ export default function Navbar() {
               </Link>
             </>
           )}
+          <button
+            onClick={toggleMusic}
+            className={`p-2 rounded-md transition-colors ${isDarkMode ? "text-dashboard-text hover:bg-dashboard-border/20" : "text-gray-700 hover:bg-gray-100"}`}
+            title={isPlaying ? "Pause music" : "Play music"}
+          >
+            {isPlaying ? (
+              <Pause className="w-4 h-4" />
+            ) : (
+              <Play className="w-4 h-4" />
+            )}
+          </button>
           <button
             onClick={() => {
               const newMode = !isDarkMode;
@@ -278,6 +363,16 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+      <audio
+        ref={audioRef}
+        src={audioUrl}
+        preload="auto"
+        onEnded={() => setIsPlaying(false)}
+        onError={() => {
+          console.log("Error loading audio file from:", audioUrl);
+          setIsPlaying(false);
+        }}
+      />
     </nav>
   );
 }

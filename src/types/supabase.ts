@@ -92,6 +92,107 @@ export type Database = {
         }
         Relationships: []
       }
+      coupon_codes: {
+        Row: {
+          active: boolean | null
+          code: string
+          created_at: string | null
+          current_uses: number | null
+          description: string | null
+          discount_type: string
+          discount_value: number
+          duration_months: number | null
+          expires_at: string | null
+          id: string
+          max_uses: number | null
+        }
+        Insert: {
+          active?: boolean | null
+          code: string
+          created_at?: string | null
+          current_uses?: number | null
+          description?: string | null
+          discount_type: string
+          discount_value: number
+          duration_months?: number | null
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+        }
+        Update: {
+          active?: boolean | null
+          code?: string
+          created_at?: string | null
+          current_uses?: number | null
+          description?: string | null
+          discount_type?: string
+          discount_value?: number
+          duration_months?: number | null
+          expires_at?: string | null
+          id?: string
+          max_uses?: number | null
+        }
+        Relationships: []
+      }
+      failed_payments: {
+        Row: {
+          cart_items: Json | null
+          checkout_session_id: string | null
+          created_at: string | null
+          email: string
+          failure_reason: string | null
+          follow_up_sent: boolean | null
+          follow_up_sent_at: string | null
+          id: string
+          last_retry_at: string | null
+          retry_count: number | null
+          stripe_session_id: string | null
+          total_amount: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          cart_items?: Json | null
+          checkout_session_id?: string | null
+          created_at?: string | null
+          email: string
+          failure_reason?: string | null
+          follow_up_sent?: boolean | null
+          follow_up_sent_at?: string | null
+          id?: string
+          last_retry_at?: string | null
+          retry_count?: number | null
+          stripe_session_id?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          cart_items?: Json | null
+          checkout_session_id?: string | null
+          created_at?: string | null
+          email?: string
+          failure_reason?: string | null
+          follow_up_sent?: boolean | null
+          follow_up_sent_at?: string | null
+          id?: string
+          last_retry_at?: string | null
+          retry_count?: number | null
+          stripe_session_id?: string | null
+          total_amount?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "failed_payments_checkout_session_id_fkey"
+            columns: ["checkout_session_id"]
+            isOneToOne: false
+            referencedRelation: "checkout_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       orders: {
         Row: {
           base_price: number
@@ -157,6 +258,7 @@ export type Database = {
           phone: string | null
           plan_level: string | null
           source: string | null
+          source_detail: string | null
           state: string | null
           text_alerts_enabled: boolean | null
           updated_at: string
@@ -169,6 +271,7 @@ export type Database = {
           phone?: string | null
           plan_level?: string | null
           source?: string | null
+          source_detail?: string | null
           state?: string | null
           text_alerts_enabled?: boolean | null
           updated_at?: string
@@ -181,6 +284,7 @@ export type Database = {
           phone?: string | null
           plan_level?: string | null
           source?: string | null
+          source_detail?: string | null
           state?: string | null
           text_alerts_enabled?: boolean | null
           updated_at?: string

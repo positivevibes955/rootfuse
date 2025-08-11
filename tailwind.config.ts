@@ -58,6 +58,10 @@ const config = {
         },
         "dashboard-bg": "#021612",
         "dashboard-text": "#35f6ae",
+        "dashboard-text-light": "#2d8659",
+        "dashboard-text-contrast": "#2d8659",
+        "dashboard-text-dark": "#1a5c3a",
+        "dashboard-text-darkest": "#0f3d26",
         "dashboard-border": "#008347",
       },
       borderRadius: {

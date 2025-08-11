@@ -70,6 +70,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ url: session.url });
   } catch (error) {
     console.error("Checkout API error:", error);
+
+    // Track failed payment attempt
+    try {
+      const supabase = await createClient();
+      await supabase.from("failed_payments").insert({
+        user_id: body.userId,
+        email: body.customerInfo?.email,
+        cart_items: body.cartItems,
+        total_amount: body.totalAmount,
+        failure_reason:
+          error instanceof Error ? error.message : "Unknown checkout error",
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
+    } catch (trackingError) {
+      console.error("Error tracking failed payment:", trackingError);
+    }
+
     return NextResponse.json(
       { error: "Failed to create checkout session" },
       { status: 500 },

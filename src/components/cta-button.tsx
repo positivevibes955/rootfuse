@@ -13,7 +13,7 @@ export default function CTAButton() {
       onClick={handleClick}
       className="inline-flex items-center px-6 py-3 text-dashboard-bg bg-dashboard-text rounded-lg hover:bg-dashboard-border transition-colors font-digital"
     >
-      Join Waitlist
+      Get Rootfuse
       <ArrowUpRight className="ml-2 w-4 h-4" />
     </button>
   );

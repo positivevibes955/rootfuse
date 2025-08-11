@@ -44,7 +44,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { email, plan_level, license_type, state, phone } = body;
+    const {
+      email,
+      plan_level,
+      license_type,
+      state,
+      phone,
+      source,
+      source_detail,
+      action,
+    } = body;
 
     // Validate email
     if (!email || typeof email !== "string") {
@@ -101,16 +110,22 @@ export async function POST(request: NextRequest) {
     // Insert email into database with additional fields
     const insertData = {
       email: cleanEmail,
-      source: "landing",
+      source: source || "landing",
+      source_detail: source_detail || null,
       plan_level: plan_level || null,
       license_type: license_type || null,
       state: state || null,
       phone: phone || null,
+      action: action || "get_started", // Track the signup action
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
-    console.log("Inserting data:", { email: cleanEmail, source: "landing" });
+    console.log("Inserting data:", {
+      email: cleanEmail,
+      source: source || "landing",
+      action: body.action || "get_started",
+    });
 
     const { data, error } = await supabase
       .from("waitlist_signups")
@@ -123,7 +138,7 @@ export async function POST(request: NextRequest) {
       // Handle duplicate email
       if (error.code === "23505" || error.message?.includes("duplicate")) {
         return NextResponse.json(
-          { error: "This email is already on our waitlist" },
+          { error: "This email is already registered for Rootfuse" },
           { status: 409, headers: corsHeaders },
         );
       }
@@ -134,14 +149,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    console.log("Successfully added email to waitlist:", cleanEmail);
+    console.log("Successfully registered email for Rootfuse:", cleanEmail);
 
     return NextResponse.json(
       {
         success: true,
-        message: "Successfully joined the Rootfuse waitlist!",
+        message:
+          (action || "get_started") === "get_started"
+            ? "Email captured! Redirecting to pricing..."
+            : "Successfully registered for Rootfuse!",
         email: cleanEmail,
         data: data?.[0] || null,
+        redirect:
+          (action || "get_started") === "get_started" ? "/pricing" : null,
       },
       { status: 201, headers: corsHeaders },
     );

@@ -7,13 +7,14 @@ export async function POST() {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `https://www.rootfuse.com/auth/callback`,
+      redirectTo: `https://222b917f-6777-4dfa-9071-1dfc7094efaa.tempo.build/auth/callback`,
     },
   });
 
   if (error) {
+    console.error("Google OAuth error:", error);
     return redirect(
-      "https://www.rootfuse.com/sign-in?message=Could not authenticate with Google",
+      "/sign-in?message=Could not authenticate with Google. Please try again.",
     );
   }
 

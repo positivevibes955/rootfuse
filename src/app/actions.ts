@@ -38,38 +38,44 @@ export const signUpAction = async (formData: FormData) => {
 
   if (user) {
     try {
-      const { error: updateError } = await supabase.from("users").insert({
+      // Try to create user record in users table if it exists
+      const { error: insertError } = await supabase.from("users").insert({
         id: user.id,
         user_id: user.id,
         name: fullName,
         email: email,
         token_identifier: user.id,
         created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
       });
 
-      if (updateError) {
-        // Error handling without console.error
-        return encodedRedirect(
-          "error",
-          "/sign-up",
-          "Error updating user. Please try again.",
-        );
+      // If insert fails due to duplicate, try update
+      if (insertError && insertError.code === "23505") {
+        const { error: updateError } = await supabase
+          .from("users")
+          .update({
+            name: fullName,
+            email: email,
+            updated_at: new Date().toISOString(),
+          })
+          .eq("id", user.id);
+
+        if (updateError) {
+          console.error("Error updating user:", updateError);
+          // Don't fail signup if users table doesn't exist or has issues
+        }
+      } else if (insertError) {
+        console.error("Error creating user:", insertError);
+        // Don't fail signup if users table doesn't exist or has issues
+        // This allows signup to continue even if the users table isn't set up
       }
     } catch (err) {
-      // Error handling without console.error
-      return encodedRedirect(
-        "error",
-        "/sign-up",
-        "Error updating user. Please try again.",
-      );
+      console.error("User creation error:", err);
+      // Don't fail signup if users table doesn't exist or has issues
     }
   }
 
-  return encodedRedirect(
-    "success",
-    "/sign-up",
-    "Thanks for signing up! Please check your email for a verification link.",
-  );
+  return redirect("/pricing");
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -113,7 +119,7 @@ export const signInAction = async (formData: FormData) => {
       }
     }
 
-    return redirect("/dashboard");
+    return redirect("/pricing");
   }
 
   // Check for rfadmin credentials
@@ -152,7 +158,7 @@ export const signInAction = async (formData: FormData) => {
       }
     }
 
-    return redirect("/dashboard");
+    return redirect("/pricing");
   }
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -164,7 +170,7 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", error.message);
   }
 
-  return redirect("/dashboard");
+  return redirect("/pricing");
 };
 
 export const signInWithGoogleAction = async () => {

@@ -15,27 +15,27 @@ export default function Footer() {
             </h3>
             <ul className="space-y-2">
               <li>
-                <button
-                  onClick={() => {
-                    if (window.location.pathname === "/") {
-                      document
-                        .getElementById("features")
-                        ?.scrollIntoView({ behavior: "smooth" });
-                    } else {
-                      window.location.href = "/#features";
-                    }
-                  }}
-                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono cursor-pointer"
+                <Link
+                  href="/#features"
+                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
                 >
                   Features
-                </button>
+                </Link>
               </li>
               <li>
                 <Link
                   href="/pricing"
                   className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
                 >
-                  Command Tiers
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/marketplace-info"
+                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
+                >
+                  Marketplace
                 </Link>
               </li>
               <li>
@@ -44,14 +44,6 @@ export default function Footer() {
                   className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
                 >
                   Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/api"
-                  className="text-dashboard-text/70 hover:text-dashboard-text font-mono"
-                >
-                  API
                 </Link>
               </li>
             </ul>

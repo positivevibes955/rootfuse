@@ -66,9 +66,86 @@
   * {
     @apply border-border;
   }
+  html {
+    @apply bg-background text-foreground;
+  }
   body {
     @apply bg-background text-foreground;
     font-family: "PT Mono", "Orbitron", monospace;
+  }
+
+  /* Light theme overrides */
+  html:not(.dark) {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+  }
+
+  /* Light mode hero section background override */
+  html:not(.dark) .hero-bg {
+    background-color: #ffffff !important;
+  }
+
+  /* Light mode dashboard colors */
+  html:not(.dark) .text-dashboard-text {
+    color: #2d8659 !important;
+  }
+
+  html:not(.dark) .border-dashboard-text {
+    border-color: #2d8659 !important;
+  }
+
+  html:not(.dark) .bg-dashboard-text {
+    background-color: #35f6ae !important;
+  }
+
+  /* Light mode paragraph text for better contrast */
+  html:not(.dark) p {
+    color: #2d8659 !important;
+  }
+
+  /* Light mode darker text for better vision contrast */
+  html:not(.dark) .text-dashboard-text-dark {
+    color: #1a5c3a !important;
+  }
+
+  /* Even darker text for hero section elements in light mode */
+  html:not(.dark) .text-dashboard-text-darker {
+    color: #0f3d26 !important;
+  }
+
+  /* Darkest text for hero section elements in light mode */
+  html:not(.dark) .text-dashboard-text-darkest {
+    color: #0a2d1a !important;
+  }
+
+  /* Light mode button colors */
+  html:not(.dark) .bg-dashboard-border {
+    background-color: #35f6ae !important;
+  }
+
+  html:not(.dark) .hover\:bg-dashboard-text:hover {
+    background-color: #2d8659 !important;
+  }
+
+  html:not(.dark) .hover\:bg-dashboard-border:hover {
+    background-color: #2d8659 !important;
   }
 }
 

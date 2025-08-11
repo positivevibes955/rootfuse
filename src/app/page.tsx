@@ -65,7 +65,7 @@ export default function Home() {
       <Hero />
 
       {/* Demo Section */}
-      <section className="py-24 bg-dashboard-border/10" id="demo">
+      <section className="py-24 bg-dashboard-bg" id="demo">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold font-digital text-dashboard-text mb-4">
@@ -79,7 +79,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             <div className="bg-dashboard-bg border-2 border-dashboard-border rounded-xl p-8">
               <div className="mb-6">
-                <div className="aspect-[16/10] bg-dashboard-bg rounded-lg border border-dashboard-border overflow-hidden">
+                <div className="aspect-[16/10] bg-dashboard-bg rounded-lg border-2 border-dashboard-text shadow-lg overflow-hidden">
                   {demoImageUrl ? (
                     <Image
                       src={demoImageUrl}
@@ -101,16 +101,14 @@ export default function Home() {
                       }}
                     />
                   ) : (
-                    <div className="flex items-center justify-center h-full">
-                      <div className="text-center">
-                        <BarChart3 className="w-16 h-16 text-dashboard-text mx-auto mb-4" />
-                        <h3 className="text-xl font-digital text-dashboard-text mb-2">
-                          Interactive Dashboard Demo
-                        </h3>
-                        <p className="text-dashboard-text/70 font-mono">
-                          Complete cannabis operations in one view
-                        </p>
-                      </div>
+                    <div className="text-center p-8">
+                      <BarChart3 className="w-16 h-16 text-dashboard-text mx-auto mb-4" />
+                      <h3 className="text-xl font-digital text-dashboard-text mb-2">
+                        Interactive Dashboard Demo
+                      </h3>
+                      <p className="text-dashboard-text/70 font-mono">
+                        Complete cannabis operations in one view
+                      </p>
                     </div>
                   )}
                 </div>
@@ -129,7 +127,7 @@ export default function Home() {
                   <div className="text-dashboard-text font-digital mb-2">
                     Live Dashboard
                   </div>
-                  <div className="text-dashboard-text/70 font-mono">
+                  <div className="text-dashboard-text/70 font-mono text-dashboard-text-dark">
                     Real-time KPIs and metrics
                   </div>
                 </div>
@@ -137,7 +135,7 @@ export default function Home() {
                   <div className="text-dashboard-text font-digital mb-2">
                     METRC Integration
                   </div>
-                  <div className="text-dashboard-text/70 font-mono">
+                  <div className="text-dashboard-text/70 font-mono text-dashboard-text-dark">
                     Seamless compliance sync
                   </div>
                 </div>
@@ -145,7 +143,7 @@ export default function Home() {
                   <div className="text-dashboard-text font-digital mb-2">
                     AI Assistant
                   </div>
-                  <div className="text-dashboard-text/70 font-mono">
+                  <div className="text-dashboard-text/70 font-mono text-dashboard-text-dark">
                     Smart automation tools
                   </div>
                 </div>
@@ -176,7 +174,7 @@ export default function Home() {
                   className="w-full h-full object-cover"
                   poster="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80"
                   controlsList="nodownload nofullscreen noremoteplayback"
-                  disablePictureInPicture
+                  disablePictureInPicture={true}
                   onContextMenu={(e) => e.preventDefault()}
                 >
                   <source
@@ -236,7 +234,7 @@ export default function Home() {
                           video.muted = true;
                           if (btn)
                             btn.innerHTML =
-                              '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a2 2 0 01-2-2v0a2 2 0 012-2h1.586l4.707-4.707C10.923 5.663 12 6.109 12 7v10c0 .891-1.077 1.337-1.707.707L5.586 15z" clip-rule="evenodd"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>';
+                              '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a2 2 0 00-2 2v0a2 2 0 002 2h2l4 4V6l-4 4z" clip-rule="evenodd"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>';
                         }
                       }}
                     >
@@ -247,9 +245,9 @@ export default function Home() {
                         viewBox="0 0 24 24"
                       >
                         <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
                           d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M6 10H4a2 2 0 00-2 2v0a2 2 0 002 2h2l4 4V6l-4 4z"
                         ></path>
                       </svg>
@@ -333,21 +331,15 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold font-digital mb-2">47</div>
-              <div className="text-dashboard-text/80 font-mono">
-                Tabs Eliminated
-              </div>
+              <div className="text-white font-mono">Tabs Eliminated</div>
             </div>
             <div>
               <div className="text-4xl font-bold font-digital mb-2">15</div>
-              <div className="text-dashboard-text/80 font-mono">
-                Logins Replaced
-              </div>
+              <div className="text-white font-mono">Logins Replaced</div>
             </div>
             <div>
               <div className="text-4xl font-bold font-digital mb-2">100%</div>
-              <div className="text-dashboard-text/80 font-mono">
-                Connected Operations
-              </div>
+              <div className="text-white font-mono">Connected Operations</div>
             </div>
           </div>
         </div>
@@ -375,7 +367,7 @@ export default function Home() {
                   <th className="text-center p-4 text-dashboard-text font-digital bg-dashboard-text/10">
                     Rootfuse
                     <br />
-                    $579/mo
+                    $480/mo
                   </th>
                   <th className="text-center p-4 text-dashboard-text font-digital">
                     Canix
@@ -439,14 +431,14 @@ export default function Home() {
                     "✅",
                     "✅",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "✅",
                     "✅",
                   ],
                   [
                     "Grow Forecasting & Yield Analytics",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
                     "",
                     "",
@@ -465,15 +457,15 @@ export default function Home() {
                     "Harvest Scheduling",
                     "✅",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
-                    "Limited",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                   ],
                   [
                     "ROI Metrics + Nutrient Logs",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
                     "",
                     "",
@@ -483,7 +475,7 @@ export default function Home() {
                   [
                     "Task Automation & Scheduling",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
                     "",
                     "",
@@ -494,7 +486,7 @@ export default function Home() {
                   [
                     "File Storage & Document Management",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
                     "",
                     "",
@@ -505,27 +497,27 @@ export default function Home() {
                     "✅",
                     "",
                     "",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                   ],
                   [
                     "POS Orders & Wholesale Portal",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "✅",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "✅",
                   ],
                   [
                     "KPI Dashboards & Alerts",
                     "✅",
-                    "Limited",
-                    "Limited",
-                    "Limited",
-                    "Limited",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                   ],
                   ["Email / SMS Campaign Tools", "✅", "", "", "", "", ""],
                   ["Form Builder & Checkout", "✅", "", "", "", "", ""],
@@ -556,21 +548,21 @@ export default function Home() {
                     "Analytics & Reporting Dashboards",
                     "✅",
                     "✅",
-                    "Limited",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                     "✅",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                   ],
                   ["Live Activity Feed", "✅", "", "", "", "", ""],
                   ["Industry News Feed", "✅", "", "", "", "", ""],
                   [
                     "API / Webhooks",
                     "✅",
-                    "Limited",
-                    "Limited",
-                    "Limited",
-                    "Limited",
-                    "Limited",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
+                    "<span class='text-dashboard-text-dark'>Limited</span>",
                   ],
                   ["Modular Feature Enablement", "✅", "", "", "", "", ""],
                   [
@@ -599,21 +591,26 @@ export default function Home() {
                     <td className="p-3 text-center text-dashboard-text bg-dashboard-text/5 border-r border-dashboard-border">
                       {row[1]}
                     </td>
-                    <td className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border">
-                      {row[2]}
-                    </td>
-                    <td className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border">
-                      {row[3]}
-                    </td>
-                    <td className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border">
-                      {row[4]}
-                    </td>
-                    <td className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border">
-                      {row[5]}
-                    </td>
-                    <td className="p-3 text-center text-dashboard-text/70">
-                      {row[6]}
-                    </td>
+                    <td
+                      className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border"
+                      dangerouslySetInnerHTML={{ __html: row[2] }}
+                    ></td>
+                    <td
+                      className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border"
+                      dangerouslySetInnerHTML={{ __html: row[3] }}
+                    ></td>
+                    <td
+                      className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border"
+                      dangerouslySetInnerHTML={{ __html: row[4] }}
+                    ></td>
+                    <td
+                      className="p-3 text-center text-dashboard-text/70 border-r border-dashboard-border"
+                      dangerouslySetInnerHTML={{ __html: row[5] }}
+                    ></td>
+                    <td
+                      className="p-3 text-center text-dashboard-text/70"
+                      dangerouslySetInnerHTML={{ __html: row[6] }}
+                    ></td>
                   </tr>
                 ))}
               </tbody>
@@ -637,7 +634,7 @@ export default function Home() {
                   <h4 className="text-dashboard-text font-digital mb-2">
                     Tools Replaced:
                   </h4>
-                  <ul className="text-sm text-dashboard-text/80 font-mono space-y-1">
+                  <ul className="text-sm text-dashboard-text/80 font-mono space-y-1 text-dashboard-text-dark">
                     <li>METRC Dashboard: $275–$800</li>
                     <li>Slack/Chat Tools: $20–$100</li>
                     <li>CRM (HubSpot, Keap): $100–$300</li>
@@ -650,7 +647,7 @@ export default function Home() {
                   <h4 className="text-dashboard-text font-digital mb-2">
                     More Tools Replaced:
                   </h4>
-                  <ul className="text-sm text-dashboard-text/80 font-mono space-y-1">
+                  <ul className="text-sm text-dashboard-text/80 font-mono space-y-1 text-dashboard-text-dark">
                     <li>Dropbox/Google Drive: $10–$50</li>
                     <li>Email/Text Marketing: $50–$300</li>
                     <li>Website Builders: $29–$79</li>
@@ -660,7 +657,7 @@ export default function Home() {
                     </li>
                     <li>
                       <strong className="text-dashboard-text">
-                        Rootfuse Base Plan: Just $269
+                        Rootfuse Base Plan: Just $260
                       </strong>
                     </li>
                   </ul>
@@ -688,7 +685,7 @@ export default function Home() {
             {[
               {
                 name: "Core Command",
-                price: 269,
+                price: 260,
                 originalPrice: null,
                 description: "Perfect for single-license operations",
                 features: [
@@ -717,7 +714,7 @@ export default function Home() {
               },
               {
                 name: "Growth Command",
-                price: 579,
+                price: 480,
                 originalPrice: null,
                 description: "Advanced features for growing operations",
                 features: [
@@ -747,7 +744,7 @@ export default function Home() {
               },
               {
                 name: "Pro Command",
-                price: 999,
+                price: 880,
                 originalPrice: null,
                 description: "Enterprise-grade solution",
                 features: [
@@ -1041,7 +1038,7 @@ export default function Home() {
                 <Link
                   key={index}
                   href={upsell.link}
-                  className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4 hover:border-dashboard-text/50 transition-all cursor-pointer block h-full"
+                  className="bg-dashboard-bg border border-dashboard-border rounded-lg p-4 hover:border-dashboard-text/50 hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer block h-full"
                 >
                   <div className="flex flex-col h-full min-h-[140px]">
                     <h4 className="font-semibold font-digital text-dashboard-text mb-2">
@@ -1056,6 +1053,173 @@ export default function Home() {
                   </div>
                 </Link>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Reviews Section */}
+      <section className="py-24 bg-dashboard-bg">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl font-bold font-digital text-dashboard-text mb-4">
+              What Our Customers Say
+            </h2>
+            <p className="text-dashboard-text/80 font-mono max-w-2xl mx-auto">
+              Real feedback from cannabis operators using RootFuse
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Growth Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "Honestly, I was skeptical at first - another software promising
+                to fix everything? But man, this actually delivered. We had
+                spreadsheets everywhere, sticky notes on monitors, and I was
+                losing my mind trying to keep track of compliance deadlines. Now
+                it's all right there when I need it. My stress levels dropped
+                big time."
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Jake Martinez, Cultivation Manager
+              </div>
+            </div>
+
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Pro Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "Look, I've been in this industry for 8 years and tried every
+                platform out there. Most are clunky or missing key features.
+                RootFuse actually gets it - the AI assistant knows our SOPs
+                better than some of my employees! The environmental monitoring
+                integration saved us from a major crop loss last month."
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Dr. Patricia Chen, Head of Operations
+              </div>
+            </div>
+
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Core Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "Y'all, this thing is wild! We went from having three different
+                systems that never talked to each other to one dashboard that
+                shows everything. My budtenders can actually find product info
+                without calling me every five minutes. The POS integration is
+                smooth as butter."
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Tommy "Big T" Johnson, Dispensary Owner
+              </div>
+            </div>
+
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Growth Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "The batch tracking feature alone pays for itself. We used to
+                lose track of which nutrients went where, harvest dates were all
+                over the place. Now everything's automated and our yields are up
+                23% because we can actually see patterns in our data. Plus the
+                compliance reports generate themselves!"
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Maria Santos, Processing Facility Manager
+              </div>
+            </div>
+
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Pro Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "Been running multi-state operations for years and this is the
+                first platform that actually handles the complexity. The
+                inter-license data flow is brilliant - I can see inventory
+                levels across all facilities in real-time. My accountant loves
+                the automated financial reporting too."
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Robert Kim, Multi-State Operator
+              </div>
+            </div>
+
+            <div className="bg-dashboard-bg border border-dashboard-border rounded-xl p-6">
+              <div className="flex items-center mb-4">
+                <div className="flex text-dashboard-text">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span className="ml-2 text-dashboard-text/70 font-mono text-sm">
+                  Core Command
+                </span>
+              </div>
+              <p className="text-dashboard-text/80 font-mono text-sm mb-4">
+                "Mate, this software is absolutely mental in the best way! We're
+                a small craft operation and couldn't afford multiple expensive
+                systems. RootFuse gives us enterprise-level features at a price
+                that doesn't break the bank. The customer support team actually
+                knows cannabis too, which is refreshing."
+              </p>
+              <div className="text-dashboard-text font-digital text-sm">
+                - Connor O'Brien, Craft Cannabis Co-op
+              </div>
             </div>
           </div>
         </div>
@@ -1086,20 +1250,20 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
-                    Core Command: $269 → You earn $40.35
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
+                    Core Command: $260 → You earn $39.00
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
-                    Growth Command: $579 → You earn $86.85
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
+                    Growth Command: $480 → You earn $72.00
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
-                    Pro Command: $999 → You earn $149.85
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
+                    Pro Command: $880 → You earn $132.00
                   </span>
                 </li>
               </ul>
@@ -1116,25 +1280,25 @@ export default function Home() {
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
                     Your referral gets 1 month free
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
                     Priority onboarding support
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
                     Exclusive referrer dashboard access
                   </span>
                 </li>
                 <li className="flex items-start space-x-2">
                   <CheckCircle2 className="h-4 w-4 text-dashboard-text mt-0.5 flex-shrink-0" />
-                  <span className="text-dashboard-text/80 font-mono">
+                  <span className="text-dashboard-text/80 font-mono text-dashboard-text-dark">
                     Monthly payout via PayPal or direct deposit
                   </span>
                 </li>
@@ -1204,9 +1368,9 @@ export default function Home() {
             Ready to Command Your Operations?
           </h2>
           <p className="text-dashboard-text/80 font-mono mb-8 max-w-2xl mx-auto">
-            Refer other cannabis businesses and earn 15% commission on their
-            first year subscription for every successful referral that stays
-            active.
+            Join thousands of cannabis businesses streamlining their operations
+            with RootFuse. Get started today and see the difference unified
+            management makes.
           </p>
           <CTAButton />
         </div>

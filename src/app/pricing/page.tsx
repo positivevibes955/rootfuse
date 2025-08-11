@@ -1,18 +1,20 @@
 "use client";
 
 import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 import { createClient } from "../../../supabase/client";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Check, Leaf, Zap, Shield, Users } from "lucide-react";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import type { User } from "@supabase/supabase-js";
 
 const pricingTiers = [
   {
     name: "Starter Command",
-    price: 275,
+    price: 260,
     description: "Perfect for single-license operations getting started",
     features: [
       "Dashboard engine (rootUI)",
@@ -33,7 +35,7 @@ const pricingTiers = [
   },
   {
     name: "Growth Command",
-    price: 499,
+    price: 480,
     description: "Advanced features for growing operations",
     features: [
       "Everything in Starter Command",
@@ -55,7 +57,7 @@ const pricingTiers = [
   },
   {
     name: "Pro Command",
-    price: 999,
+    price: 880,
     description: "Full-featured solution for established operations",
     features: [
       "Everything in Growth Command",
@@ -88,6 +90,7 @@ const pricingTiers = [
     extraUser: 59,
     maxUsers: "Unlimited",
     popular: false,
+    isContactUs: true,
   },
 ];
 
@@ -95,7 +98,7 @@ const upsells = [
   {
     name: "METRC Sync",
     price: 79.5,
-    unit: "per license",
+    unit: "per license per month",
     link: "/metrc-sync-info",
   },
   {
@@ -136,6 +139,84 @@ const upsells = [
     unit: "4 hrs (<200 mi from OKC)",
     note: "$1200 + Travel/Lodge >200mi",
     link: "/done-for-you-info",
+  },
+  {
+    name: "Environment Sync",
+    price: 89,
+    unit: "per month",
+    link: "/environment-sync-info",
+  },
+  {
+    name: "Text Marketing",
+    price: 149,
+    unit: "per month (1000 messages)",
+    link: "/text-marketing-info",
+  },
+  {
+    name: "Social Media Scheduler",
+    price: 99,
+    unit: "per month",
+    link: "/social-media-scheduler-info",
+  },
+  {
+    name: "AI Automation Services",
+    price: 299,
+    unit: "per month",
+    link: "/ai-automation-services-info",
+  },
+  {
+    name: "Custom AI",
+    price: 499,
+    unit: "per month",
+    link: "/custom-ai-info",
+  },
+  {
+    name: "Auto Accountant",
+    price: 199,
+    unit: "per month",
+    link: "/auto-accountant-info",
+  },
+  {
+    name: "Website Creation",
+    price: 2500,
+    unit: "one-time + $99/month hosting",
+    link: "/website-creation-info",
+  },
+  {
+    name: "Ecommerce Website",
+    price: 3500,
+    unit: "one-time + $149/month hosting",
+    link: "/ecommerce-website-info",
+  },
+  {
+    name: "White Label",
+    price: 5000,
+    unit: "one-time setup + 30% revenue share",
+    link: "/white-label-info",
+  },
+  {
+    name: "Marketplace Access",
+    price: 299,
+    unit: "per month",
+    link: "/marketplace-info",
+  },
+  {
+    name: "Custom Database Setup",
+    price: 2000,
+    unit: "one-time",
+    link: "/custom-database-setup-info",
+  },
+  {
+    name: "API Integration (Not Listed)",
+    price: 500,
+    unit: "per integration",
+    link: "/api-not-listed-info",
+  },
+  {
+    name: "Additional License Types",
+    price: 200,
+    unit: "per additional type per month",
+    link: "/additional-license-types-info",
   },
 ];
 
@@ -216,10 +297,16 @@ export default function Pricing() {
                   {tier.name}
                 </CardTitle>
                 <div className="text-3xl font-bold font-digital text-dashboard-text">
-                  ${tier.price}
-                  <span className="text-sm font-mono text-dashboard-text/70">
-                    /month
-                  </span>
+                  {tier.isContactUs ? (
+                    <span className="text-2xl">Contact Us</span>
+                  ) : (
+                    <>
+                      ${tier.price}
+                      <span className="text-sm font-mono text-dashboard-text/70">
+                        /month
+                      </span>
+                    </>
+                  )}
                 </div>
                 <p className="text-dashboard-text/70 font-mono text-sm">
                   {tier.description}
@@ -263,10 +350,14 @@ export default function Pricing() {
                 </div>
 
                 <Button
-                  onClick={() => addToCart(tier)}
+                  onClick={() =>
+                    tier.isContactUs
+                      ? (window.location.href = "/help-center")
+                      : addToCart(tier)
+                  }
                   className="w-full bg-dashboard-border text-dashboard-text hover:bg-dashboard-text hover:text-dashboard-bg font-digital"
                 >
-                  Add to Cart
+                  {tier.isContactUs ? "Contact Us" : "Add to Cart"}
                 </Button>
               </CardContent>
             </Card>
@@ -274,11 +365,11 @@ export default function Pricing() {
         </div>
 
         {/* Upsells Section */}
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <h2 className="text-2xl font-bold font-digital text-dashboard-text mb-8 text-center">
-            Available Upsells (Any Tier)
+            Upgrades at Any Level
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {upsells.map((upsell, index) => (
               <Card
                 key={index}
@@ -320,6 +411,7 @@ export default function Pricing() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

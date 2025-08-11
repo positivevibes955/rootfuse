@@ -9,16 +9,127 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WaitlistForm from "@/components/waitlist-form";
 import Image from "next/image";
+import { getImageUrl } from "@/utils/storage";
 
 export default function Hero() {
   const [showFuseBotDialog, setShowFuseBotDialog] = useState(false);
+  const [rootsImageUrl, setRootsImageUrl] = useState<string>("");
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMouseInside, setIsMouseInside] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    const fetchRootsImage = async () => {
+      try {
+        const url = await getImageUrl("rootfuse_roots_overlay.png");
+        if (url && !url.includes("sign") && !url.includes("error")) {
+          setRootsImageUrl(url);
+          console.log("Roots image loaded successfully:", url);
+        } else {
+          console.log("Roots image not found or invalid URL:", url);
+        }
+      } catch (error) {
+        console.log("Error fetching roots overlay image:", error);
+      }
+    };
+    fetchRootsImage();
+
+    // Check theme on mount and listen for changes
+    const checkTheme = () => {
+      const savedTheme = localStorage.getItem("theme");
+      const isDark = savedTheme !== "light";
+      setIsDarkMode(isDark);
+
+      // Also check document class
+      const hasDocumentDark =
+        document.documentElement.classList.contains("dark");
+      if (hasDocumentDark !== isDark) {
+        setIsDarkMode(hasDocumentDark);
+      }
+    };
+
+    checkTheme();
+
+    // Listen for theme changes
+    const observer = new MutationObserver(() => {
+      checkTheme();
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
+  };
 
   return (
-    <div className="relative overflow-hidden bg-dashboard-bg">
-      <div className="absolute inset-0 bg-gradient-to-br from-dashboard-bg via-dashboard-border/10 to-dashboard-bg opacity-70" />
+    <div
+      className="relative overflow-hidden bg-white dark:bg-dashboard-bg"
+      onMouseMove={handleMouseMove}
+      onMouseEnter={() => setIsMouseInside(true)}
+      onMouseLeave={() => setIsMouseInside(false)}
+    >
+      {/* Base background - changes based on theme */}
+      <div className="absolute inset-0 bg-white dark:bg-dashboard-bg" />
+
+      {/* Interactive roots reveal with glow effect */}
+      {rootsImageUrl && (
+        <div className="absolute inset-0 pointer-events-none">
+          {/* Glow layer behind the roots */}
+          <div
+            className="absolute inset-0 transition-opacity duration-300"
+            style={
+              {
+                background:
+                  "radial-gradient(circle 80px at var(--mouse-x) var(--mouse-y), rgba(53, 246, 174, 0.8) 0px, rgba(53, 246, 174, 0.4) 35px, rgba(53, 246, 174, 0.2) 60px, transparent 80px)",
+                "--mouse-x": `${mousePosition.x}px`,
+                "--mouse-y": `${mousePosition.y}px`,
+                opacity: isMouseInside ? 1 : 0,
+              } as React.CSSProperties
+            }
+          />
+          {/* Full-size roots image positioned to align with background */}
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `url(${rootsImageUrl})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              filter: "brightness(1.6) contrast(1.4) saturate(1.2)",
+            }}
+          />
+          {/* Mask overlay to hide everything except the circular area */}
+          <div
+            className="absolute inset-0 transition-all duration-300"
+            style={
+              {
+                background: isDarkMode
+                  ? isMouseInside
+                    ? "radial-gradient(circle 80px at var(--mouse-x) var(--mouse-y), transparent 60px, rgba(2, 22, 18, 0.3) 70px, rgba(2, 22, 18, 0.7) 75px, #021612 80px)"
+                    : "#021612"
+                  : isMouseInside
+                    ? "radial-gradient(circle 80px at var(--mouse-x) var(--mouse-y), transparent 60px, rgba(255, 255, 255, 0.3) 70px, rgba(255, 255, 255, 0.7) 75px, rgba(255, 255, 255, 1) 80px)"
+                    : "#ffffff",
+                "--mouse-x": `${mousePosition.x}px`,
+                "--mouse-y": `${mousePosition.y}px`,
+              } as React.CSSProperties
+            }
+          />
+        </div>
+      )}
 
       <div className="relative pt-24 pb-32 sm:pt-32 sm:pb-40">
         <div className="container mx-auto px-4">
@@ -40,15 +151,21 @@ export default function Hero() {
             <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-dashboard-text/70 font-mono">
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-dashboard-text" />
-                <span>METRC Integration Ready</span>
+                <span className="text-dashboard-text-darker dark:text-dashboard-text-darker light:text-dashboard-text-darkest">
+                  METRC Integration Ready
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-dashboard-text" />
-                <span>Compliance Built-In</span>
+                <span className="text-dashboard-text-darker dark:text-dashboard-text-darker light:text-dashboard-text-darkest">
+                  Compliance Built-In
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="w-5 h-5 text-dashboard-text" />
-                <span>Multi-License Support</span>
+                <span className="text-dashboard-text-darker dark:text-dashboard-text-darker light:text-dashboard-text-darkest">
+                  Multi-License Support
+                </span>
               </div>
             </div>
           </div>
